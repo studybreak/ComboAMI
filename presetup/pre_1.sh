@@ -20,6 +20,7 @@ sudo echo "sun-java6-bin shared/accepted-sun-dlj-v1-1 boolean true" | sudo debco
 
 # Install Git
 sudo apt-get -y update
+sudo apt-get -y upgrade
 sudo apt-get -y install git
 
 # Git these files on to the server's home directory
@@ -31,19 +32,18 @@ cd datastax_ami
 git checkout $(head -n 1 presetup/VERSION)
 
 # Install Java
-sudo su
-wget https://s3.amazonaws.com/ds-java/jdk-6u38-linux-x64.bin
-mkdir -p /opt/java/64
-mv jdk-6u38-linux-x64.bin /opt/java/64/
-cd /opt/java/64
-chmod +x jdk*
-./jdk*
+wget https://s3.amazonaws.com/hangtime.com/systems/java/jdk-6u45-linux-x64.bin
+sudo mkdir -p /opt/java/64
+sudo mv jdk-6u45-linux-x64.bin /opt/java/64/
+pushd /opt/java/64
+sudo chmod +x jdk*
+sudo ./jdk*
+popd
 
 # Setup java alternatives
-exit
-sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_38/bin/java" 1
-sudo update-alternatives --set java /opt/java/64/jdk1.6.0_38/bin/java
-export JAVA_HOME=/opt/java/64/jdk1.6.0_38
+sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_45/bin/java" 1
+sudo update-alternatives --set java /opt/java/64/jdk1.6.0_45/bin/java
+export JAVA_HOME=/opt/java/64/jdk1.6.0_45
 
 # Begin the actual priming
 git pull

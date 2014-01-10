@@ -76,8 +76,8 @@ def install_software():
 
     # TODO: UPDATE THESE PATHS ON THE NEXT BAKE
     # Update Java alternatives
-    exe('sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_38/bin/java" 1')
-    exe('sudo update-alternatives --set java /opt/java/64/jdk1.6.0_38/bin/java')
+    exe('sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_45/bin/java" 1')
+    exe('sudo update-alternatives --set java /opt/java/64/jdk1.6.0_45/bin/java')
 
 # Fixed in ds1:setup_profile() for AMI 2.4
 def setup_profiles():
@@ -87,7 +87,7 @@ def setup_profiles():
     with open(file_to_open, 'a') as f:
         f.write("""
     python datastax_ami/ds4_motd.py
-    export JAVA_HOME=/opt/java/64/jdk1.6.0_38
+    export JAVA_HOME=/opt/java/64/jdk1.6.0_45
     """)
     exe('sudo chmod 644 ' + file_to_open)
 
@@ -96,7 +96,7 @@ def setup_profiles():
     exe('sudo chmod 777 ' + file_to_open)
     with open(file_to_open, 'w') as f:
         f.write("""
-    export JAVA_HOME=/opt/java/64/jdk1.6.0_38
+    export JAVA_HOME=/opt/java/64/jdk1.6.0_45
     """)
     exe('sudo chmod 644 ' + file_to_open)
     os.chdir('/home/ubuntu')
@@ -116,14 +116,14 @@ def create_initd():
     ### END INIT INFO
 
     # Make sure variables get set
-    export JAVA_HOME=/opt/java/64/jdk1.6.0_38
+    export JAVA_HOME=/opt/java/64/jdk1.6.0_45
 
     # Setup system properties
     sudo su -c 'ulimit -n 32768'
     echo 1 | sudo tee /proc/sys/vm/overcommit_memory
 
     # Clear old ami.log
-    echo "\n======================================================\n" >> ami.log
+    echo "\\n======================================================\\n" >> ami.log
     cd /home/ubuntu/datastax_ami
     python ds0_updater.py
     """
